@@ -1,26 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-//import { Assignments } from "../models/assignment";
 import connectDB from "../../lib/mongodb";
-
-const questions = [
-  {
-    Question: "What is the capital of France?",
-    Answers: ["Berlin", "Madrid", "Paris", "Rome"],
-    CorrectAnswer: 2,
-  },
-  {
-    Question: "What is 2 + 2?",
-    Answers: ["3", "4", "5", "6"],
-    CorrectAnswer: 1,
-  },
-  {
-    Question: "Which is the largest planet in our solar system?",
-    Answers: ["Earth", "Mars", "Jupiter", "Venus"],
-    CorrectAnswer: 2,
-  },
-];
 
 export default function Test() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -43,11 +24,8 @@ export default function Test() {
         );
         if (res.ok) {
           const data = await res.json();
-          console.log("Response data:", data.message);
           // Log the JSON data to the console
           setQuestions(data.message);
-          //questions = data.message;
-          //console.log(questions[0].Question);
           setLoading(false);
         } else {
           console.error("Error fetching data:", res.statusText);
@@ -56,7 +34,6 @@ export default function Test() {
         console.error("Error fetching questions:", error);
       }
     };
-
     fetchQuestions();
   }, []);
 
@@ -64,7 +41,6 @@ export default function Test() {
     if (selectedOption == questions[currentQuestion].CorrectAnswer) {
       setScore(score + 1);
     }
-
     setSelectedOption(null);
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
@@ -73,7 +49,6 @@ export default function Test() {
       const Score =
         score +
         (selectedOption == questions[currentQuestion].CorrectAnswer ? 1 : 0);
-
       const res = await fetch("/api/submitAssignment", {
         method: "POST",
         headers: {
@@ -87,7 +62,6 @@ export default function Test() {
           total,
         }),
       });
-      console.log(res);
       if (res.status == 200) {
         router.push(
           `/result?score=${
@@ -115,7 +89,6 @@ export default function Test() {
               Question {currentQuestion + 1} / {questions.length}
             </h1>
             <p>{questions[currentQuestion].Question}</p>
-
             <div>
               {questions[currentQuestion].Answers.map((option, index) => (
                 <div key={index}>

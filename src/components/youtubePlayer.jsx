@@ -23,9 +23,9 @@ export default function YouTubePlayer({ videoId, taskId }) {
   const videoOptions = {
     playerVars: {
       autoplay: 0, // Auto-play the video
-      controls: 1, // Disable controls
+      controls: 0, // Disable controls
       disablekb: 1, // Disable keyboard shortcuts
-      rel: 0, //Dispables Suggested videos after playback
+      rel: 0, // Dispables Suggested videos after playback
     },
   };
 
