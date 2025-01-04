@@ -11,9 +11,8 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title> App</title>
+        <title> Milestone </title>
         <meta content="by Harit Chowdhury" name="home" />
-        <link href="/favicon.ico" rel="icon" />
       </Head>
       <div className={styles.NavBar}>
         <NavBar />

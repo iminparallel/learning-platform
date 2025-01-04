@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import connectDB from "../../lib/mongodb";
+import { useSession } from "next-auth/react";
 
 export default function Test() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -12,9 +12,14 @@ export default function Test() {
   const searchParams = useSearchParams();
   const Project = searchParams.get("project");
   const Assignment = searchParams.get("assignment");
-  const userEmail = searchParams.get("email");
-  const [loading, setLoading] = useState(true);
+  const MileStones = searchParams.get("milestones");
 
+  const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
+  let userEmail = "";
+  if (session) {
+    userEmail = session.user.email;
+  }
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -69,7 +74,7 @@ export default function Test() {
             (selectedOption == questions[currentQuestion].CorrectAnswer ? 1 : 0)
           }&total=${
             questions.length
-          }&project=${Project}&assignment=${Assignment}`
+          }&project=${Project}&assignment=${Assignment}&milestones=${MileStones}`
         );
       } else {
         router.push("/");
@@ -79,7 +84,7 @@ export default function Test() {
 
   return (
     <>
-      {!loading ? (
+      {!loading && session ? (
         <>
           <div style={{ textAlign: "center", marginTop: "50px" }}>
             <p>Project: {Project}</p>

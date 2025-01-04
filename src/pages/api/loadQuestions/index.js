@@ -1,6 +1,6 @@
 import connectDB from "../../../lib/mongodb";
 
-import { MultipleChoice } from "../../models/questions";
+import { MultipleChoice } from "../../../models/questions";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 

@@ -1,16 +1,16 @@
-import { MultipleChoice } from "../../../models/questions";
+import { Assignments } from "../../../models/assignment";
 import connectDB from "../../../lib/mongodb";
 import mongoose from "mongoose";
 
 export default async function GET(req, res) {
-  const { project, assignment } = await req.query;
-
+  const { email, project, assignment } = await req.query;
   let top;
   try {
     await connectDB();
-    top = await MultipleChoice.find({
+    top = await Assignments.find({
       Project: project,
       Assignment: assignment,
+      userEmail: email,
     });
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {

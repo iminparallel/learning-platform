@@ -1,6 +1,6 @@
 import connectDB from "../../../lib/mongodb";
 
-import { Assignments } from "../../models/assignment";
+import { Assignments } from "../../../models/assignment";
 import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 

@@ -1,3 +1,4 @@
+"use client";
 import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 //import type { AppProps } from "next/app";
@@ -8,7 +9,16 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 //import { RainbowKitSiweNextAuthProvider } from "@rainbow-me/rainbowkit-siwe-next-auth";
 import { SessionProvider } from "next-auth/react";
 
-import { config } from "../wagmi";
+import { config, WagmiConfig, createClient, configureChains } from "../wagmi";
+/*import { publicProvider } from "@wagmi/core";
+import { mainnet } from "wagmi/chains";
+
+const { provider } = configureChains([mainnet], [publicProvider]);
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  provider,
+}); */
 
 const client = new QueryClient();
 

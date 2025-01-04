@@ -1,5 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
+import ClaimMileStone from "../../components/claimMilestone";
 
 export default function Result() {
   const router = useRouter();
@@ -8,6 +9,12 @@ export default function Result() {
   const total = searchParams.get("total");
   const project = searchParams.get("project");
   const assignment = searchParams.get("assignment");
+  const MileStones = searchParams.get("milestones");
+  let claimable;
+  if (Number(MileStones) < Number(assignment)) {
+    claimable = true;
+  }
+
   console.log(score, total);
 
   return (
@@ -25,6 +32,8 @@ export default function Result() {
       >
         Go to Home
       </button>
+      <br />
+      {claimable ? <ClaimMileStone /> : <p>already claimed</p>}
     </div>
   );
 }

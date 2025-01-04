@@ -10,14 +10,14 @@ const style_hover = {
   textAlign: "center",
   marginTop: "10px",
   marginLeft: "50px",
-  color: "blue",
+  color: "green",
 };
 
 export default function NavBar() {
   const { data: session } = useSession();
   return (
     <nav>
-      <div style={style_hover}>Learnable</div>
+      <div style={style_hover}>Milestone</div>
       <Login />
       {session ? <ConnectButton /> : <></>}
     </nav>
