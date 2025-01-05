@@ -9,7 +9,7 @@ export const hardhatChain = {
   },
   rpcUrls: {
     default: {
-      http: ["http://127.0.0.1:8545"], // Replace with your Hardhat RPC URL if different
+      http: ["http://127.0.0.1:8545"],
     },
   },
 };

@@ -3,21 +3,70 @@ import Description from "@/components/descriptions";
 import { useSession, signIn } from "next-auth/react";
 import YouTubePlayer from "@/components/youtubePlayer";
 import { useRouter } from "next/navigation";
-import { useAccount } from "wagmi";
+import { useAccount, useChainId } from "wagmi";
 import { useState, useEffect } from "react";
 import LockAmount from "@/components/lockAmount";
+import { readContract } from "@wagmi/core";
+import { abi, contractAddresses } from "../constants";
+import { config } from "../wagmi";
+import { getBalance } from "@wagmi/core";
+//import Image from "next/image";
+//import saladFingersPicture from "../public/salad_fingers.svg";
 
 export default function Outro() {
+  const [isLockedIn, setIsLockedIn] = useState(false);
   const { address, isConnected } = useAccount();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(true);
   const [mileStones, setMileStones] = useState(1);
+  const [balance, setBalance] = useState("");
+
+  const chainId = useChainId();
+  const mileStonesAddress =
+    chainId in contractAddresses ? contractAddresses[chainId][0] : null;
   const proj = "saladFinger";
   const router = useRouter();
 
+  const contractBalance = async () => {
+    const contractBalance = await getBalance(config, {
+      address: mileStonesAddress,
+    });
+    setBalance(contractBalance.formatted.toString());
+
+    console.log(contractBalance.value);
+  };
+
   useEffect(() => {
-    console.log("Either session or address has changed.");
-  }, [session, address]);
+    async function getUserDetails() {
+      try {
+        console.log("Either session or address has changed.");
+        const result = await readContract(config, {
+          abi,
+          address: mileStonesAddress,
+          functionName: "getUserDetails",
+          args: [address],
+        });
+        setMileStones(result.milestoneCompleted.toString());
+        try {
+          if (result.totalAmount.toString() > 0) {
+            setIsLockedIn(true);
+          } else {
+            setIsLockedIn(false);
+          }
+        } catch {
+          setIsLockedIn(false);
+        }
+        console.log(result);
+        console.log(isLockedIn);
+      } catch (error) {
+        console.log(error);
+        setMileStones("0");
+      }
+      setBalance("");
+    }
+
+    getUserDetails();
+  }, [session, address, chainId]);
 
   const startTest = (assignment) => {
     const project = "saladFinger";
@@ -30,7 +79,47 @@ export default function Outro() {
     <>
       {session ? (
         <>
-          <LockAmount />
+          {mileStonesAddress ? (
+            <div style={{ marginTop: "10px" }}>
+              <p> Mile Stones Completed: {mileStones}/4</p>
+              {isConnected ? (
+                !isLockedIn ? (
+                  <LockAmount />
+                ) : (
+                  <div>Already Locked IN</div>
+                )
+              ) : (
+                <div style={{ marginTop: "20px", color: "red" }}>
+                  {" "}
+                  Connect Wallet to access this section{" "}
+                </div>
+              )}
+              {balance && isConnected ? (
+                <>
+                  <p>Contract Address: {mileStonesAddress}</p>
+                  <p style={{ marginTop: "10px" }}>
+                    {" "}
+                    Contract Balance: {balance}
+                  </p>
+                </>
+              ) : (
+                <></>
+              )}
+              {mileStonesAddress && isConnected ? (
+                <button
+                  onClick={contractBalance}
+                  style={{ padding: "5px 15px", cursor: "pointer" }}
+                >
+                  balance
+                </button>
+              ) : (
+                <></>
+              )}
+            </div>
+          ) : (
+            <> The contract is not deployed in this chain</>
+          )}
+
           <YouTubePlayer videoId="OWBFKL6H7rI" taskId="1" />
           <br />
           <button
@@ -73,7 +162,17 @@ export default function Outro() {
       ) : (
         <div>
           <br />
-          Please Login to see content <br />
+          {/*
+       <Image
+            className="p-1 text-white"
+            src={saladFingersPicture}
+            width={50}
+            height={50}
+            alt="chained"
+          />
+        */}
+          <p> Please Login to see content</p>
+          <br />
           <button onClick={() => signIn()}>Sign in</button>
         </div>
       )}

@@ -10,7 +10,7 @@ const nextConfig = {
     return config;
   },
   //pageExtensions: ["index.jsx", "index.js"],
-  include: ["next-env.d.js", "**/*.js", "**/*.jsx"],
+  //include: ["next-env.d.js", "**/*.js", "**/*.jsx"],
 };
 
 module.exports = nextConfig;

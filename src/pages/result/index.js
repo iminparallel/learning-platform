@@ -1,6 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import ClaimMileStone from "../../components/claimMilestone";
+import { useAccount } from "wagmi";
 
 export default function Result() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function Result() {
   const project = searchParams.get("project");
   const assignment = searchParams.get("assignment");
   const MileStones = searchParams.get("milestones");
+  const { address, isConnected } = useAccount();
   let claimable;
   if (Number(MileStones) < Number(assignment)) {
     claimable = true;
@@ -33,7 +35,15 @@ export default function Result() {
         Go to Home
       </button>
       <br />
-      {claimable ? <ClaimMileStone /> : <p>already claimed</p>}
+      {isConnected ? (
+        claimable ? (
+          <ClaimMileStone milestones={MileStones} />
+        ) : (
+          <p>already claimed</p>
+        )
+      ) : (
+        <p> Wallet not connected </p>
+      )}
     </div>
   );
 }

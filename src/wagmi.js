@@ -8,6 +8,7 @@ import {
   sepolia,
 } from "wagmi/chains";
 import { hardhatChain } from "./localchain";
+import { eduTestnetChain } from "./testchains";
 export const config = getDefaultConfig({
   appName: "Milestone App",
   projectId: process.env.NEXT_PUBLIC_RAINBOW_PROJECT_ID,
@@ -18,7 +19,7 @@ export const config = getDefaultConfig({
     arbitrum,
     base,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
-      ? [sepolia, hardhatChain]
+      ? [sepolia, hardhatChain, eduTestnetChain]
       : []),
   ],
   ssr: true,

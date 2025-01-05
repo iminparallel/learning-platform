@@ -1,14 +1,9 @@
 "use client";
 import { useState } from "react";
-import {
-  useAccount,
-  useWriteContract,
-  useChainId,
-  getSigner,
-  useProvider,
-} from "wagmi";
+import { useAccount, useWriteContract, useChainId } from "wagmi";
 import { abi, contractAddresses } from "../constants";
 import { ethers } from "ethers";
+import { config } from "../wagmi";
 
 export default function LockAmount() {
   const { address, isConnected } = useAccount();
@@ -34,31 +29,7 @@ export default function LockAmount() {
       abi,
       functionName: "lockFunds",
       value: ethers.parseEther(inputValue.toString()),
-      //args: [ethers.parseEther(inputValue.toString())],
-      //overrides: {
-      //   value: ethers.parseEther(inputValue.toString()),
-      //nonce: 1,
-      //},
     });
-    //const provider = new ethers.BrowserProvider(window.ethereum);
-    //const signer = provider.getSigner();
-    //const { provider } = useProvider();
-    //const signer = provider.getSigner(address);
-    //const { signer } = getSigner();
-
-    // Convert amount to Wei
-    //const valueInWei = ethers.parseEther(inputValue.toString());
-
-    // Create contract instance
-    /* const contract = new ethers.Contract(
-      mileStonesAddress, // Replace with your contract address
-      abi,
-      signer
-    ); */
-
-    // Call lockFunds function with value
-    //const tx = await contract.lockFunds({ value: valueInWei });
-    //console.log("Transaction sent:", tx);
 
     console.log(hash);
     setInputValue("");
@@ -72,8 +43,7 @@ export default function LockAmount() {
     <p>...loading</p>
   ) : (
     <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
-      <p style={{ marginTop: "40px", color: "green" }}>Lock Amount</p>
-      {mileStonesAddress}
+      <p style={{ color: "green" }}>Lock Amount</p>
       <input
         type="text"
         disable={isPending.toString()}
