@@ -113,7 +113,7 @@ export default function Outro() {
               )}
             </div>
           ) : (
-            <> The contract is not deployed in this chain</>
+            <> The contract is not deployed on this chain</>
           )}
           <YouTubePlayer videoId="OWBFKL6H7rI" taskId="1" />
           <br />
