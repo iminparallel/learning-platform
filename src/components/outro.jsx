@@ -157,9 +157,15 @@ export default function Outro() {
       ) : (
         <div>
           <br />
-          <p>Sign in to see content</p>
+          <p>
+            You can lock in some amount, and claim your money back by
+            compleating a series of milestones!
+          </p>
+          <p>Sign in to see content...</p>
           <br />
           <button onClick={() => signIn()}>Sign in</button>
+          <br />
+          <small>*only available in sepolia ETH and EDU Testnet</small>
         </div>
       )}
     </>

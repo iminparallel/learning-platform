@@ -17,7 +17,7 @@ export default function NavBar() {
   const { data: session } = useSession();
   return (
     <nav>
-      <div style={style_hover}>Milestone</div>
+      <div style={style_hover}>Milestones</div>
       <Login />
       {session ? <ConnectButton /> : <></>}
     </nav>

@@ -70,8 +70,8 @@ export default function ClaimMileStone({ milestones }) {
         )
       ) : (
         <p>
-          You can't claim this Milestone again! <br /> Please Lock in or try a
-          different Milestone!{" "}
+          You can't claim this Milestone again! <br /> Please Lock in, or try a
+          different Milestone, or a different Chain!{" "}
         </p>
       )}
     </div>

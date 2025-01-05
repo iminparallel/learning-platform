@@ -19,8 +19,8 @@ export default function LockAmount() {
 
   const handleClick = async () => {
     // Lock Amount
-    if (!/^[0-9]+(\.[0-9]+)?$/.test(inputValue) || Number(inputValue) <= 0.1) {
-      setErrorMessage("Please enter a numeric value greater than 0.1.");
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(inputValue) || Number(inputValue) <= 0.01) {
+      setErrorMessage("Please enter a numeric value greater than 0.01.");
       setResponseMessage("");
       setIsError(false);
       return;
