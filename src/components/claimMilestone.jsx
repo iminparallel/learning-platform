@@ -50,7 +50,7 @@ export default function ClaimMileStone({ milestones }) {
       functionName: "completeMilestone",
     });
     console.log(hash);
-    if (hash) {
+    if (!error) {
       setClaimable(false);
     }
     console.log("claimd a milestone");
@@ -70,7 +70,7 @@ export default function ClaimMileStone({ milestones }) {
         )
       ) : (
         <p>
-          You can't claim this Milestone! <br /> Please Lock in or try a
+          You can't claim this Milestone again! <br /> Please Lock in or try a
           different Milestone!{" "}
         </p>
       )}

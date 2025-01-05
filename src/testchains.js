@@ -1,5 +1,5 @@
 export const eduTestnetChain = {
-  id: 41923, // Replace with the actual chain ID for the EDU testnet
+  id: 656476, // Replace with the actual chain ID for the EDU testnet
   name: "EDU Testnet",
   network: "edu-testnet",
   nativeCurrency: {
@@ -9,7 +9,7 @@ export const eduTestnetChain = {
   },
   rpcUrls: {
     default: {
-      http: ["https://rpc.edu-chain.raas.gelato.cloud"], // Replace with the actual RPC URL
+      http: ["https://open-campus-codex-sepolia.drpc.org"], // Replace with the actual RPC URL
     },
   },
   blockExplorers: {

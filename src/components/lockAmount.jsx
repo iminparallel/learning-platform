@@ -4,7 +4,7 @@ import { useAccount, useWriteContract, useChainId } from "wagmi";
 import { abi, contractAddresses } from "../constants";
 import { ethers } from "ethers";
 import { config } from "../wagmi";
-
+//Lock Amount Component: Lets users lock amount
 export default function LockAmount() {
   const { address, isConnected } = useAccount();
   const [inputValue, setInputValue] = useState("");
@@ -18,8 +18,9 @@ export default function LockAmount() {
     chainId in contractAddresses ? contractAddresses[chainId][0] : null;
 
   const handleClick = async () => {
-    if (!/^[0-9]+$/.test(inputValue) || Number(inputValue) <= 100) {
-      setErrorMessage("Please enter a numeric value greater than 100.");
+    // Lock Amount
+    if (!/^[0-9]+(\.[0-9]+)?$/.test(inputValue) || Number(inputValue) <= 0.1) {
+      setErrorMessage("Please enter a numeric value greater than 0.1.");
       setResponseMessage("");
       setIsError(false);
       return;
@@ -30,9 +31,10 @@ export default function LockAmount() {
       functionName: "lockFunds",
       value: ethers.parseEther(inputValue.toString()),
     });
-
     console.log(hash);
     setInputValue("");
+    setErrorMessage("");
+    setIsError(false);
     if (error) {
       setIsError(true);
       console.log(error);

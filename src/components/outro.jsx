@@ -10,9 +10,7 @@ import { readContract } from "@wagmi/core";
 import { abi, contractAddresses } from "../constants";
 import { config } from "../wagmi";
 import { getBalance } from "@wagmi/core";
-//import Image from "next/image";
-//import saladFingersPicture from "../public/salad_fingers.svg";
-
+//Outro Course Component: Let's watch videos take tests and lock ammount
 export default function Outro() {
   const [isLockedIn, setIsLockedIn] = useState(false);
   const { address, isConnected } = useAccount();
@@ -20,14 +18,13 @@ export default function Outro() {
   const [loading, setLoading] = useState(true);
   const [mileStones, setMileStones] = useState(1);
   const [balance, setBalance] = useState("");
-
   const chainId = useChainId();
   const mileStonesAddress =
     chainId in contractAddresses ? contractAddresses[chainId][0] : null;
   const proj = "saladFinger";
   const router = useRouter();
-
   const contractBalance = async () => {
+    // Get Contract Balance
     const contractBalance = await getBalance(config, {
       address: mileStonesAddress,
     });
@@ -36,7 +33,15 @@ export default function Outro() {
     console.log(contractBalance.value);
   };
 
+  const startTest = (assignment) => {
+    // Start Test
+    const project = "saladFinger";
+    router.push(
+      `/test?project=${project}&assignment=${assignment}&milestones=${mileStones}`
+    );
+  };
   useEffect(() => {
+    //Periodically update states depending on next-auth, wallet window, and chainId
     async function getUserDetails() {
       try {
         console.log("Either session or address has changed.");
@@ -64,17 +69,8 @@ export default function Outro() {
       }
       setBalance("");
     }
-
     getUserDetails();
   }, [session, address, chainId]);
-
-  const startTest = (assignment) => {
-    const project = "saladFinger";
-    router.push(
-      `/test?project=${project}&assignment=${assignment}&milestones=${mileStones}`
-    );
-  };
-
   return (
     <>
       {session ? (
@@ -119,7 +115,6 @@ export default function Outro() {
           ) : (
             <> The contract is not deployed in this chain</>
           )}
-
           <YouTubePlayer videoId="OWBFKL6H7rI" taskId="1" />
           <br />
           <button
@@ -162,16 +157,7 @@ export default function Outro() {
       ) : (
         <div>
           <br />
-          {/*
-       <Image
-            className="p-1 text-white"
-            src={saladFingersPicture}
-            width={50}
-            height={50}
-            alt="chained"
-          />
-        */}
-          <p> Please Login to see content</p>
+          <p>Sign in to see content</p>
           <br />
           <button onClick={() => signIn()}>Sign in</button>
         </div>
