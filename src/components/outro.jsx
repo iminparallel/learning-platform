@@ -165,7 +165,7 @@ export default function Outro() {
           <br />
           <button onClick={() => signIn()}>Sign in</button>
           <br />
-          <small>*only available in sepolia ETH and EDU Testnet</small>
+          <small>*only available on EDU Testnet</small>
         </div>
       )}
     </>

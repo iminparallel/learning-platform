@@ -19,7 +19,7 @@ export const config = getDefaultConfig({
     arbitrum,
     base,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true"
-      ? [sepolia, eduTestnetChain]
+      ? [eduTestnetChain]
       : []),
   ],
   ssr: true,
